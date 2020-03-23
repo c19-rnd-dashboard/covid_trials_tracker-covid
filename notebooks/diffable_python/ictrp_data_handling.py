@@ -215,7 +215,7 @@ else:
 #take a quick glance at old trials that updated
 
 df_cond_int[(df_cond_int['Last_Refreshed_on'] > pd.Timestamp(prior_extract_date)) & 
-            df_conf_int['first_seen'] != this_extract_date]
+            (df_cond_int['first_seen'] != this_extract_date)]
 
 # +
 col_names = []
@@ -223,29 +223,30 @@ col_names = []
 for col in list(df_cond_int.columns):
     col_names.append(col.lower())
     
-df_int_norm.columns = col_names
+df_cond_int.columns = col_names
 
 reorder = ['trialid', 'source_register', 'date_registration', 'date_enrollement', 'normed_spon_names', 
            'recruitment_status', 'phase', 'study_type', 'countries', 'public_title', 'intervention_type', 
            'web_address', 'results_url_link', 'last_refreshed_on', 'first_seen']
 
-df_final = df_cond_norm[reorder].reset_index(drop=True)
+df_final = df_cond_int[reorder].reset_index(drop=True)
+
+# +
+#df_final.to_csv(f'trial_list_{this_extract_date}.csv')
 # -
 
-df_final.to_csv(f'trial_list_{this_extract_date}.csv')
-
-
+df_final.head()
 
 
 
 # # Overall Trend in Registered Trials Graph
 
 # +
-just_reg = df_final[['TrialID', 'Date_registration']].reset_index(drop=True)
+just_reg = df_final[['trialid', 'date_registration']].reset_index(drop=True)
 
 #catch old registrations that were expanded to include COVID, we can get rid of these for now
-just_reg = just_reg[just_reg['Date_registration'] >= pd.Timestamp(2020,1,1)].reset_index(drop=True)
-just_reg.index = just_reg['Date_registration']
+just_reg = just_reg[just_reg['date_registration'] >= pd.Timestamp(2020,1,1)].reset_index(drop=True)
+just_reg.index = just_reg['date_registration']
 
 
 grouped = just_reg.resample('W').count()
@@ -263,18 +264,18 @@ x_pos = [i for i, _ in enumerate(labels)]
 
 fig, ax = plt.subplots(figsize=(10,5), dpi = 300)
 
-l1 = plt.plot(x_pos, grouped['TrialID'], marker = 'o')
-l2 = plt.plot(x_pos, cumsum['TrialID'], marker = 'o')
+l1 = plt.plot(x_pos, grouped['trialid'], marker = 'o')
+l2 = plt.plot(x_pos, cumsum['trialid'], marker = 'o')
 
-for i, j in zip(x_pos[1:], grouped['TrialID'].tolist()[1:]):
+for i, j in zip(x_pos[1:], grouped['trialid'].tolist()[1:]):
     ax.annotate(str(j), (i,j), xytext = (i-.1, j-35))
 
-for i, j in zip(x_pos, cumsum['TrialID']):
+for i, j in zip(x_pos, cumsum['trialid']):
     ax.annotate(str(j), (i,j), xytext = (i-.2, j+20))
     
 
-gr = grouped['TrialID'].to_list()
-cs = cumsum['TrialID'].to_list()
+gr = grouped['trialid'].to_list()
+cs = cumsum['trialid'].to_list()
 
 plt.xticks(x_pos, labels, rotation=45, fontsize=8)
 plt.ylim(-20,600)
@@ -284,6 +285,6 @@ plt.title('Registered COVID-19 Trials by Week on the ICTRP')
 plt.legend(('New Trials', 'Cumulative Trials'), loc=2)
 #plt.savefig(f'trial_count_{last_extract_date}.png')
 plt.show()
-# +
+# -
 
 
