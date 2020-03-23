@@ -242,12 +242,11 @@ df_final.head()
 # # Overall Trend in Registered Trials Graph
 
 # +
-#for the moment we aren't generating the final df yet so just pulling in the most complete so we can pass the tests
-just_reg = df_final[['trialid, 'Date_registration']].reset_index(drop=True)
+just_reg = df_final[['trialid', 'date_registration']].reset_index(drop=True)
 
 #catch old registrations that were expanded to include COVID, we can get rid of these for now
-just_reg = just_reg[just_reg['Date_registration'] >= pd.Timestamp(2020,1,1)].reset_index(drop=True)
-just_reg.index = just_reg['Date_registration']
+just_reg = just_reg[just_reg['date_registration'] >= pd.Timestamp(2020,1,1)].reset_index(drop=True)
+just_reg.index = just_reg['date_registration']
 
 
 grouped = just_reg.resample('W').count()
@@ -265,18 +264,18 @@ x_pos = [i for i, _ in enumerate(labels)]
 
 fig, ax = plt.subplots(figsize=(10,5), dpi = 300)
 
-l1 = plt.plot(x_pos, grouped['TrialID'], marker = 'o')
-l2 = plt.plot(x_pos, cumsum['TrialID'], marker = 'o')
+l1 = plt.plot(x_pos, grouped['trialid'], marker = 'o')
+l2 = plt.plot(x_pos, cumsum['trialid'], marker = 'o')
 
-for i, j in zip(x_pos[1:], grouped['TrialID'].tolist()[1:]):
+for i, j in zip(x_pos[1:], grouped['trialid'].tolist()[1:]):
     ax.annotate(str(j), (i,j), xytext = (i-.1, j-35))
 
-for i, j in zip(x_pos, cumsum['TrialID']):
+for i, j in zip(x_pos, cumsum['trialid']):
     ax.annotate(str(j), (i,j), xytext = (i-.2, j+20))
     
 
-gr = grouped['TrialID'].to_list()
-cs = cumsum['TrialID'].to_list()
+gr = grouped['trialid'].to_list()
+cs = cumsum['trialid'].to_list()
 
 plt.xticks(x_pos, labels, rotation=45, fontsize=8)
 plt.ylim(-20,600)
