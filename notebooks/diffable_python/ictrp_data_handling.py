@@ -242,7 +242,9 @@ df_final = df_cond_int[reorder].reset_index(drop=True)
 # # Overall Trend in Registered Trials Graph
 
 # +
-just_reg = df_final[['TrialID', 'Date_registration']].reset_index(drop=True)
+#for the moment we aren't generating the final df yet so just pulling in the most complete so we can pass the tests
+#just_reg = df_final[['TrialID', 'Date_registration']].reset_index(drop=True)
+just_reg = df_cond_int[['TrialID', 'Date_registration']].reset_index(drop=True)
 
 #catch old registrations that were expanded to include COVID, we can get rid of these for now
 just_reg = just_reg[just_reg['Date_registration'] >= pd.Timestamp(2020,1,1)].reset_index(drop=True)
