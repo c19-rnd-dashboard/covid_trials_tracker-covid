@@ -106,6 +106,7 @@ urllib3==1.25.8           # via requests
 wcwidth==0.1.8            # via prompt-toolkit, pytest
 webencodings==0.5.1       # via bleach
 widgetsnbextension==3.5.1  # via ipywidgets
+xmltodict==0.12.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
