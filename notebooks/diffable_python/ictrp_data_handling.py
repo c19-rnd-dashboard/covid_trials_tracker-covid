@@ -223,7 +223,7 @@ col_names = []
 for col in list(df_cond_int.columns):
     col_names.append(col.lower())
     
-df_cond_norm.columns = col_names
+df_int_norm.columns = col_names
 
 reorder = ['trialid', 'source_register', 'date_registration', 'date_enrollement', 'normed_spon_names', 
            'recruitment_status', 'phase', 'study_type', 'countries', 'public_title', 'intervention_type', 
@@ -284,6 +284,6 @@ plt.title('Registered COVID-19 Trials by Week on the ICTRP')
 plt.legend(('New Trials', 'Cumulative Trials'), loc=2)
 #plt.savefig(f'trial_count_{last_extract_date}.png')
 plt.show()
-# -
+# +
 
 
