@@ -215,7 +215,7 @@ else:
 #take a quick glance at old trials that updated
 
 df_cond_int[(df_cond_int['Last_Refreshed_on'] > pd.Timestamp(prior_extract_date)) & 
-            df_conf_int['first_seen'] != this_extract_date]
+            (df_cond_int['first_seen'] != this_extract_date)]
 
 # +
 col_names = []
@@ -284,6 +284,6 @@ plt.title('Registered COVID-19 Trials by Week on the ICTRP')
 plt.legend(('New Trials', 'Cumulative Trials'), loc=2)
 #plt.savefig(f'trial_count_{last_extract_date}.png')
 plt.show()
-# +
+# -
 
 
