@@ -223,16 +223,17 @@ col_names = []
 for col in list(df_cond_int.columns):
     col_names.append(col.lower())
     
-df_int_norm.columns = col_names
+df_cond_int.columns = col_names
 
 reorder = ['trialid', 'source_register', 'date_registration', 'date_enrollement', 'normed_spon_names', 
            'recruitment_status', 'phase', 'study_type', 'countries', 'public_title', 'intervention_type', 
            'web_address', 'results_url_link', 'last_refreshed_on', 'first_seen']
 
-df_final = df_cond_norm[reorder].reset_index(drop=True)
-# -
+df_final = df_cond_int[reorder].reset_index(drop=True)
 
-df_final.to_csv(f'trial_list_{this_extract_date}.csv')
+# +
+#df_final.to_csv(f'trial_list_{this_extract_date}.csv')
+# -
 
 
 
