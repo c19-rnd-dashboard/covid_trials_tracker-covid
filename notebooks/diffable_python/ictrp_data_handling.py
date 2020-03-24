@@ -143,12 +143,6 @@ check_fields('Study_type')
 #semi-colons in the intervention field mess with CSV
 df_cond_nc['Intervention'] = df_cond_nc['Intervention'].str.replace(';', '')
 
-#phase
-phase_fixes = {'0':'N/A', '1':'Phase 1', '2':'Phase 2', '3':'Phase 3', '4':'Phase 4', 
-               '1-2':'Phase 1/Phase 2', 'Retrospective study':'N/A', 
-               'New Treatment Measure Clinical Study':'N/A'}
-df_cond_nc['Phase'] = df_cond_nc['Phase'].replace(phase_fixes)
-
 #Study Type
 df_cond_nc['Study_type'] = df_cond_nc['Study_type'].str.replace(' study', '')
 df_cond_nc['Study_type'] = df_cond_nc['Study_type'].replace('Observational [Patient Registry]', 'Observational')
@@ -291,6 +285,6 @@ plt.title('Registered COVID-19 Trials by Week on the ICTRP')
 plt.legend(('New Trials', 'Cumulative Trials'), loc=2)
 #plt.savefig(f'trial_count_{last_extract_date}.png')
 plt.show()
-# +
+# -
 
 
